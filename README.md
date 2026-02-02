@@ -73,7 +73,14 @@ Unlike standard lists, QuantumGrid uses a **two-dimensional virtualization appro
 - **Scroll Jitter**: < 1ms frame time.
 - **Memory Footprint**: Minimal, thanks to efficient state pruning.
 
-### Core Philosophy
+## 📊 Compliance & Audit Reports
+
+For recruiters and technical reviewers, we provide detailed audit reports on the grid's performance and accessibility:
+
+- **[Performance Audit Report](./reports/performance-report.md)**: Detailed metrics on FPS, memory usage, and virtualization latency.
+- **[Accessibility (A11y) Report](./reports/accessibility-report.md)**: Manual and automated (Axe) audit results confirming WCAG 2.1 AA compliance.
+
+### 💡 Core Philosophy
 - **Zero Dependencies**: Core grid logic has no external dependencies to ensure maximum speed and minimum bundle size.
 - **Composition over Configuration**: Columns are highly customizable via the `renderCell` and `renderHeader` APIs.
 
