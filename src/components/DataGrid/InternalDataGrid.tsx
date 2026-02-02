@@ -70,11 +70,16 @@ export const InternalDataGrid: React.FC = () => {
         const observer = new ResizeObserver((entries) => {
             for (const entry of entries) {
                 const { clientHeight, clientWidth } = entry.target;
-                setScrollState(prev => ({
-                    ...prev,
-                    containerHeight: clientHeight,
-                    containerWidth: clientWidth
-                }));
+                setScrollState(prev => {
+                    if (prev.containerHeight === clientHeight && prev.containerWidth === clientWidth) {
+                        return prev;
+                    }
+                    return {
+                        ...prev,
+                        containerHeight: clientHeight,
+                        containerWidth: clientWidth
+                    };
+                });
             }
         });
 
@@ -93,21 +98,29 @@ export const InternalDataGrid: React.FC = () => {
         store.setState({ scrollLeft, scrollTop });
     }, [store]);
 
+    const getScrollElement = useCallback(() => parentRef.current, []);
+    const rowEstimateSize = useCallback(() => 35, []);
+
     // Row Virtualization
     const rowVirtualizer = useVirtualizer({
         count: sortedData.length,
-        getScrollElement: () => parentRef.current,
-        estimateSize: () => 35, // Fixed row height
+        getScrollElement,
+        estimateSize: rowEstimateSize,
         overscan: 5,
         scrollOffset: scrollState.scrollTop,
         containerSize: scrollState.containerHeight,
     });
 
+    const colEstimateSize = useCallback((index: number) => {
+        const col = visibleColumns[index];
+        return columnWidths[col.id] || col.width;
+    }, [visibleColumns, columnWidths]);
+
     // Column Virtualization
     const columnVirtualizer = useVirtualizer({
         count: visibleColumns.length,
-        getScrollElement: () => parentRef.current,
-        estimateSize: (index) => columnWidths[visibleColumns[index].id] || visibleColumns[index].width,
+        getScrollElement,
+        estimateSize: colEstimateSize,
         overscan: 2,
         scrollOffset: scrollState.scrollLeft,
         containerSize: scrollState.containerWidth

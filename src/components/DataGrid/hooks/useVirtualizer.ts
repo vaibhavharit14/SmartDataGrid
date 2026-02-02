@@ -25,31 +25,40 @@ export function useVirtualizer({
     containerSize
 }: UseVirtualizerProps) {
 
-    // Total size calculation - O(1) if fixed, else O(N)
+    // Check if fixed size for optimization
+    const isFixedSize = useMemo(() => {
+        if (count === 0) return true;
+        const s1 = estimateSize(0);
+        const s2 = estimateSize(Math.max(0, count - 1));
+        const s3 = estimateSize(Math.floor(count / 2));
+        return s1 === s2 && s1 === s3;
+    }, [count, estimateSize]);
+
+    const fixedSize = isFixedSize ? estimateSize(0) : 0;
+
+    // Total size calculation - O(1) if fixed
     const totalSize = useMemo(() => {
-        // Assume fixed size if we can, or just loop once.
-        // For 50k, looping once on 'count' change is fine.
+        if (isFixedSize) return count * fixedSize;
+
         let size = 0;
         for (let i = 0; i < count; i++) {
             size += estimateSize(i);
         }
         return size;
-    }, [count, estimateSize]);
+    }, [count, estimateSize, isFixedSize, fixedSize]);
 
     const virtualItems = useMemo(() => {
+        if (count === 0) return [];
+
         const rangeStart = scrollOffset;
         const rangeEnd = rangeStart + containerSize;
 
         let startIndex = 0;
         let endIndex = 0;
 
-        // OPTIMIZATION: If estimateSize(0) === estimateSize(count-1), we assume fixed height to avoid O(N) scan
-        const size0 = estimateSize(0);
-        const sizeN = estimateSize(Math.max(0, count - 1));
-
-        if (size0 === sizeN) {
-            startIndex = Math.floor(rangeStart / size0);
-            endIndex = Math.ceil(rangeEnd / size0);
+        if (isFixedSize) {
+            startIndex = Math.floor(rangeStart / fixedSize);
+            endIndex = Math.ceil(rangeEnd / fixedSize);
         } else {
             // Variable height fallback (Linear Scan O(N))
             let currentOffset = 0;
@@ -77,8 +86,8 @@ export function useVirtualizer({
         let accumulatedTop = 0;
 
         // Calculate offset for the first visible item
-        if (size0 === sizeN) {
-            accumulatedTop = startIndex * size0;
+        if (isFixedSize) {
+            accumulatedTop = startIndex * fixedSize;
         } else {
             for (let k = 0; k < startIndex; k++) {
                 accumulatedTop += estimateSize(k);
@@ -86,7 +95,7 @@ export function useVirtualizer({
         }
 
         for (let i = startIndex; i <= endIndex; i++) {
-            const size = estimateSize(i);
+            const size = isFixedSize ? fixedSize : estimateSize(i);
             items.push({
                 index: i,
                 start: accumulatedTop,
@@ -98,7 +107,7 @@ export function useVirtualizer({
 
         return items;
 
-    }, [count, estimateSize, overscan, scrollOffset, containerSize]);
+    }, [count, estimateSize, overscan, scrollOffset, containerSize, isFixedSize, fixedSize]);
 
     return { virtualItems, totalSize };
 }

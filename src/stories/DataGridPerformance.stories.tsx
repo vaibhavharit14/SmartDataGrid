@@ -38,5 +38,6 @@ export const FiftyThousandRows: Story = {
       { id: "city", title: "City", width: 150 },
       { id: "country", title: "Country", width: 150, pinned: 'right' },
     ],
+    style: { height: '600px' },
   },
 };
