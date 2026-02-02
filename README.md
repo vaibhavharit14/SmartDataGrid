@@ -1,23 +1,21 @@
-# 🌌 QuantumGrid: High-Performance Enterprise Data Grid
+# QuantumGrid: High-Performance Enterprise Data Grid
 
 QuantumGrid is a state-of-the-art React data grid engine built from the ground up for extreme performance and precision. Designed to handle massive datasets with ease, it features zero-latency virtualization, predictive focus management, and a premium aesthetic.
 
-![Version](https://img.shields.io/badge/version-0.1.0-blue.svg)
-![React](https://img.shields.io/badge/React-19-61DAFB.svg?logo=react)
-![Next.js](https://img.shields.io/badge/Next.js-16-black.svg?logo=nextdotjs)
-![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6.svg?logo=typescript)
-
 ---
+### Development
+https://smart-data-grid.vercel.app/
 
-## 🚀 Key Features
 
-### ⚡ Infinite Virtualization
+##  Key Features
+
+###  Infinite Virtualization
 Seamlessly handles **50,000+ rows** and complex column structures using a custom virtualization engine. This ensures the DOM remains light and the UI stays 60FPS, even during rapid scrolling.
 
-### 📌 Precision Pinning
+###  Precision Pinning
 Supports multi-directional column pinning (Left/Right). Pinned columns remain seamlessly integrated with the virtualized scrollable area with perfect alignment and zero jitter.
 
-### ✏️ Interactive Manipulation
+###  Interactive Manipulation
 - **Inline Editing**: Sophisticated double-click to edit experience with built-in validation.
 - **Async Validation**: Support for asynchronous validation logic (e.g., checking uniqueness on a server).
 - **Undo/Redo**: A global history stack that allows users to revert changes instantly (`Ctrl+Z`).
@@ -25,14 +23,14 @@ Supports multi-directional column pinning (Left/Right). Pinned columns remain se
 ### ⌨️ Professional Navigation
 Predictive keyboard focus management. Navigate massive datasets using arrow keys with automatic scrolling to keep the active cell in view.
 
-### 🎨 Premium Aesthetics
+###  Premium Aesthetics
 - **Responsive Dark Mode**: Fully optimized for dark/light transitions with a sleek, minimalist design.
 - **Glassmorphism UI**: Uses modern CSS effects to create a deep, layered interface.
 - **Micro-animations**: Smooth transitions and hover effects for a tactile user experience.
 
 ---
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 - **Frontend**: [Next.js 16](https://nextjs.org/) (App Router), [React 19](https://react.dev/)
 - **Logic**: [TypeScript](https://www.typescriptlang.org/) (Strictly Typed)
@@ -43,7 +41,7 @@ Predictive keyboard focus management. Navigate massive datasets using arrow keys
 
 ---
 
-## 📦 Getting Started
+##  Getting Started
 
 ### Prerequisites
 - Node.js 20+
@@ -56,11 +54,6 @@ cd quantum-grid
 npm install
 ```
 
-### Development
-```bash
-npm run dev
-```
-Open [http://localhost:3000](http://localhost:3000) to see the live demo.
 
 ### Storybook (UI Documentation)
 Explore component variations and documentation:
@@ -70,7 +63,7 @@ npm run storybook
 
 ---
 
-## 🏗️ Architecture & Performance
+## Architecture & Performance
 
 ### Virtualization Strategy
 Unlike standard lists, QuantumGrid uses a **two-dimensional virtualization approach**. Only the rows and columns currently visible in the viewport are rendered. This reduces the DOM node count from $1,000,000+$ (for a 50k x 20 grid) to less than 100.
@@ -85,12 +78,3 @@ Unlike standard lists, QuantumGrid uses a **two-dimensional virtualization appro
 - **Composition over Configuration**: Columns are highly customizable via the `renderCell` and `renderHeader` APIs.
 
 ---
-
-## 👨‍💻 Author
-**Your Name**
-[Portfolio](https://yourportfolio.com) | [LinkedIn](https://linkedin.com/in/yourprofile)
-
----
-
-## 📄 License
-MIT License. Feel free to use and contribute!
